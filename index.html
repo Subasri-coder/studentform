@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: cornflowerblue;
+    
+ 
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: #fff;
+      width: 400px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group input, .form-group select, .form-group span {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .form-group input[type="radio"] {
+      width: auto;
+      margin: 0 5px 0 0;
+    }
+    form button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+    }
+    form button:hover {
+      background-color: #45a049;
+    }
+    table {
+      width: 90%;
+      margin-top: 20px;
+      margin-left: 50px;
+      border-collapse: collapse;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      text-align: center;
+      padding: 10px;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .delete-btn, .edit-btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .delete-btn {
+      background-color: red;
+      color: white;
+    }
+    .delete-btn:hover {
+      background-color: darkred;
+    }
+    .edit-btn {
+      background-color: blue;
+      color: white;
+    }
+    .edit-btn:hover {
+      background-color: darkblue;
+    }
+  </style>
+</head>
+<body>
+  <h1>STUDENT FORM</h1>
+  <form id="studentForm">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" placeholder="Enter student name" required>
+    </div>
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input type="number" id="age" placeholder="Enter student age" required>
+    </div>
+    <div class="form-group">
+      <label>Gender</label>
+      <span>
+        <input type="radio" id="male" name="gender" value="Male" required> Male
+        <input type="radio" id="female" name="gender" value="Female" required> Female
+        <input type="radio" id="other" name="gender" value="other" required> Other
+    </span>
+    </div>
+    <div class="form-group">
+      <label for="course">Course</label>
+      <select id="course" required>
+        <option value="" disabled selected>Select course</option>
+        <option value="Python">Python</option>
+        <option value="JavaScript">JavaScript</option>
+        <option value="Java">Java</option>
+        <option value="c">c</option>
+        <option value="c++">c++</option>
+        <option value="PHP">PHP</option>
+        <option value="Web Development">Web Development</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" placeholder="Enter student email" required>
+    </div>
+    <div>
+      <button type="submit">SUBMIT</button>
+    </div>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Course</th>
+        <th>Gender</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="studentTableBody">
+      <!-- Rows will be added here -->
+    </tbody>
+  </table>
+
+  <script>
+    const form = document.getElementById('studentForm');
+    const tableBody = document.getElementById('studentTableBody');
+    let editingRow = null;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const gender = document.querySelector('input[name="gender"]:checked').value;
+      const course = document.getElementById('course').value;
+      const email = document.getElementById('email').value;
+
+      if (editingRow) {
+        // Update the existing row
+        editingRow.cells[0].textContent = name;
+        editingRow.cells[1].textContent = age;
+        editingRow.cells[2].textContent = course;
+        editingRow.cells[3].textContent = gender;
+        editingRow.cells[4].textContent = email;
+        editingRow = null;
+      } else {
+        // Create a new row
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+          <td>${name}</td>
+          <td>${age}</td>
+          <td>${course}</td>
+          <td>${gender}</td>
+          <td>${email}</td>
+          <td>
+            <button class="edit-btn">Edit</button>
+            <button class="delete-btn">Delete</button>
+          </td>
+        `;
+
+        // Add edit functionality
+        row.querySelector('.edit-btn').addEventListener('click', function () {
+          editingRow = row;
+          document.getElementById('name').value = row.cells[0].textContent;
+          document.getElementById('age').value = row.cells[1].textContent;
+          document.getElementById('course').value = row.cells[2].textContent;
+          document.querySelector(input[name="gender"][value="${row.cells[3].textContent}"]).checked = true;
+          document.getElementById('email').value = row.cells[4].textContent;
+        });
+
+        // Add delete functionality
+        row.querySelector('.delete-btn').addEventListener('click', function () {
+          tableBody.removeChild(row);
+        });
+
+        tableBody.appendChild(row);
+      }
+
+      // Reset the form
+      form.reset();
+    });
+  </script>
+</body>
+</html>
